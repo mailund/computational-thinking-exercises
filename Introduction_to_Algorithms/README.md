@@ -2,5 +2,6 @@
 
 ## Exercises:
 
-* [*Below or above*](Below-or-above/exercise.py) ([solution](Below-or-above/solution.py))
+* [**Below or above**](Below-or-above/README.md)
+* [**Finding square roots**](Square-roots/README.md)
 
