@@ -24,7 +24,7 @@ The update xᵢ₊₁ = 1/2(xᵢ + S/xᵢ) picks the next guess to be the averag
 
 **Exercise:** From this description alone you can argue that *if* the method terminates, it will report a correct answer. Prove that the algorithm is correct.
 
-In each iteration, we update the interval in which we know `√S` resides by cutting the previous interval in half.
+In each iteration, we update the interval in which we know √S resides by cutting the previous interval in half.
 
 **Exercise:** Use this to prove that the algorithm terminates.
 
