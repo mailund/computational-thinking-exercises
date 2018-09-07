@@ -31,3 +31,4 @@ In each iteration, we update the interval in which we know `√S` resides by cut
 **Exercise:** Implement and test this algorithm.
 
 
+You can see my solutions [here](answers.md).

@@ -26,3 +26,5 @@ while (upper_bound - lower_bound) > ε:
         upper_bound = S/x
 ```
 
+You can find it in [babylonian.py](babylonian.py).
+
