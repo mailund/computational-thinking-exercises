@@ -10,4 +10,4 @@ x = [12, 45, 32, 65, 78, 23, 35, 45, 57]
 
 *Hint:* One way to approach this is to consider the longest sequence seen so far and the longest sequence up to a given index into `x`. From this, you can formalise invariants that should get you through.
 
-You can see my solution in [answer.py].
+You can see my solution in [answer.py](answer.py).
