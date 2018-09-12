@@ -29,3 +29,5 @@ mean = accumulator / length
 ```
 
 How many operations are needed here? Is it more or less efficient than the previous algorithm?
+
+You can see my answers in [answer.md](answer.md).
