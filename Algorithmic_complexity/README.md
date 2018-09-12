@@ -5,3 +5,4 @@
 * [**Guessing-game complexity**](Guessing-complexity/README.md)
 * [**Function growth**](Function_growth/README.md)
 * [**Insertion sort**](Insertion_sort/README.md)
+* [**Binary search**](Binary_search/README.md)
