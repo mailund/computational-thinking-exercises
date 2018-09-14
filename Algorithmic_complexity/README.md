@@ -6,3 +6,5 @@
 * [**Function growth**](Function_growth/README.md)
 * [**Insertion sort**](Insertion_sort/README.md)
 * [**Binary search**](Binary_search/README.md)
+* [**Sieve of Eratosthenes**](Sieve.README.md)
+* [**Merging**](Merging/README.md)
