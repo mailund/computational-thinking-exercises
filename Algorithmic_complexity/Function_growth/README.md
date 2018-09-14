@@ -20,4 +20,4 @@ Consider the classes
 9. f(n) = 2ⁿ/n
 10. f(n) = log(log(n))
 
-
+You can see my answers in [answers.md](answers.md).
