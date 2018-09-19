@@ -18,21 +18,6 @@ def input_integer(prompt):
             print(inp, "is not a valid integer.")
 
 
-def input_selection(prompt, options):
-    """Get user input, restrict it to fixed options."""
-    modified_prompt = "{} [{}]: ".format(
-        prompt.strip(), ", ".join(options)
-    )
-    while True:
-        inp = input(modified_prompt)
-        if inp in options:
-            return inp
-        # nope, not a valid answer...
-        print("Invalid choice! Must be in [{}]".format(
-            ", ".join(options)
-        ))
-
-
 # Here is an implementation of the game. The computer picks
 # a number and you should try to guess it.
 
