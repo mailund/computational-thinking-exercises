@@ -12,6 +12,8 @@ def Fib(n):
 
 **Exercise:** Draw the call stack for computing the fourth Fibonacci number using the implementation you did in the previous exercise.
 
+[](fib.png)
+
 ## List exercises
 
 **Exercise:** To compute the sum of the elements in a list, we can obviously do this iteratively:
