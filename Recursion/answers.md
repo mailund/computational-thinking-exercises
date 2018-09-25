@@ -12,7 +12,7 @@ def Fib(n):
 
 **Exercise:** Draw the call stack for computing the fourth Fibonacci number using the implementation you did in the previous exercise.
 
-[](fib.png)
+![](fib.png)
 
 ## List exercises
 
