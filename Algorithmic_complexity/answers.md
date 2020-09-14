@@ -26,7 +26,7 @@ doesn’t update `accumulator` with a new value, rather it needs to compute a di
 ```python
 accumulator = 0                      # 1
 for n in numbers:                    # 5 × n + 2
-	accumulator += n                 # n × 1
+	accumulator += n                   # n × 1
 mean = accumulator / len(numbers)    # 3
 ```
 
@@ -51,8 +51,8 @@ How many operations are needed here? Is it more or less efficient than the previ
 accumulator = 0                  # 1
 length = 0                       # 1
 for n in numbers:                # 5 × n + 2
-	accumulator += n             # 1 × n
-	length += 1                  # 1 × n
+	accumulator += n               # 1 × n
+	length += 1                    # 1 × n
 mean = accumulator / length      # 3
 ```
 
@@ -146,35 +146,6 @@ Functions:
 
 
 
-## Insertion sort
-
-**Exercise:** Describe what the input data, `numbers`, should look like to actually achieve the worst- and best-case running times.
-
-**Answer:** 
-
-Recall that the algorithm looks like this:
-
-```python
-for i in range(1,len(x)):
-	j = i
-	while j > 0 and x[j-1] > x[j]:
-		x[j-1], x[j] = x[j], x[j-1]
-		j -= 1		
-```
-
-For each index `i` we move the element there down until we find its place in the sorted part of `x`.
-
-If `x` is sorted from the start, we never move an element down—we just discover that it is already where it should be. In that case, we get the linear running time.
-
-If the elements are sorted but in the reverse order, however, each new value will be moved through all the sorted elements. In that case, we get the quadratic running time.
-
-
-## Binary search
-
-**Exercise:** What is the best-case running time, and what would the input data look like to achieve it?
-
-**Answer:** If the very first element we see is the one we are looking for, i.e. if it at the midpoint of the range, then we finish in constant time.
-
 ## Sieve of Eratosthenes
 
 **Exercise:** Derive an upper bound for its running time. 
@@ -183,30 +154,34 @@ If the elements are sorted but in the reverse order, however, each new value wil
 
 **Exercise:** Is there a difference between its best-case and worst-case running time?
 
-**Answer:** We do not *actually* iterate through all numbers larger than i. Only those that we have not eliminated as divisible by a number smaller than i. Getting the average number of elements left in the list when we look at prime p is not so straightforward; at least not to me. But we can give it the old college try.
+**Answer:** No, in the sense that there is not data that gives us better or worse running time. However, the running time is not quadratic as we just derived; the algorithm runs faster than that. We do not *actually* iterate through all numbers larger than i. Only those that we have not eliminated as divisible by a number smaller than i. Getting the average number of elements left in the list when we look at prime p is not so straightforward; at least not to me.
 
-When p=2, we run through n-1 elements—we have all but the first to run through. After that, there are n/2 left. Then, for three we run though those n/2, but we remove every third, so now there are no more than n/3 left. We do not remove a third of those that were left after removing the even numbers—it is not a third of those that are divisible by three—but there can’t be more than a third left of the original list when we have removed those divisible by three. The same argument then goes for p = 5; there can’t be more than a fifth of the original numbers left after that.
+We can modify the algorithm slightly, to make it easier to reason about. Instead of running through all the candidates in each inner loop, we can jump through the multiples of the current prime. If we keep all candidates in the list when we "remove" them, and merely tag them as removed, we can jump in steps of p to do this.
 
-We can therefor bound the numbers of elements left after we have processed prime p by n/p. 
-
-You can run this to see how n/p compares to the actual numbers:
+This is easiest to do if the indices into candidates match the numbers, so we start with zero. Since 0 and 1 are not prime, we can tag them as such immediately; set them to `None`. Then you move through the candidates list, continue when you see a tagged number, and when you find a prime, jump through the list and tag the multiples of it.
 
 ```python
-n = 100
-numbers = list(range(2,n))
-p = 1
-while numbers != []:
-	fmt = "#numbers = {:>2}, n/p = {:>3.2f}"
-	print(fmt.format(len(numbers), n/p))
-	p = numbers[0]
-	numbers = [n for n in numbers if n % p != 0]
+candidates = list(range(n + 1))
+candidates[0], candidates[1] = None, None
+for i in range(n + 1):
+    if candidates[i] is None:
+        continue
+
+    # Sieve..., time O(n/p)
+    p = candidates[i]
+    # skip index i, that is the prime we want to keep
+    for j in range(i + p, n + 1, p):
+        candidates[j] = None
+
+primes = [p for p in candidates if p is not None]
 ```
 
-So, an upper bound of the algorithm is O(n + n/2 + n/3 + n/5 + … ) or O(n + n × (sum of 1/p for primes less than n).
 
-The sum here is called the "sum of reciprocals of primes", and this [can be proven](https://bit.ly/2I8cdOH) to be in O(log(log(n)).
+If you implement the algorithm this way, you can reason that the running time is n plus the total running time of the inner loop. The inner loop, when you look at prime p, has n/p steps (you jump up to n in step sizes of p). So, an upper bound of the algorithm is O(n + n/2 + n/3 + n/5 + … ) or O(n + n × (sum of 1/p for primes less than n).
 
-So, a tighter bound on the running time is O(n × log(log(n)) ).
+The sum here is called the "sum of reciprocals of primes", and it is shown to be in O(log(log(n)). So, a tighter bound on the running time is O(n × log(log(n)))--if we use the second version.
+
+In the first algorithm, we do not consider candidates that we have already eliminated, but in the second we do. On the other hand, in the first algorithm we do not skip past candidates we know are not multiples of the prime we are sieving no, while in the second we do. I do not know which algorithm is the fastest. Someone certainly will, but it is not obvious to me. Experimentally, however, I find that the second algorithm accesses the list substantially fewer time. I suspect that continues being the case to larger numbers than those I have tried, but when it comes to primes you know know what they get up to a few numbers higher than where you looked...
 
 
 ## Merging

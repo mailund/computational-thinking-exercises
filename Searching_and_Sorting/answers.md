@@ -26,6 +26,38 @@ If the input is already sorted, then we never swap any items. The inner loop is 
 
 If the input is sorted in reverse order, then the inner loop will always run through the entire prefix of sorted items, which is the maximum number of iterations it can have.
 
+
+## Insertion sort
+
+**Exercise:** Describe what the input data, `numbers`, should look like to actually achieve the worst- and best-case running times.
+
+**Answer:** 
+
+Recall that the algorithm looks like this:
+
+```python
+for i in range(1,len(x)):
+	j = i
+	while j > 0 and x[j-1] > x[j]:
+		x[j-1], x[j] = x[j], x[j-1]
+		j -= 1		
+```
+
+For each index `i` we move the element there down until we find its place in the sorted part of `x`.
+
+If `x` is sorted from the start, we never move an element down—we just discover that it is already where it should be. In that case, we get the linear running time.
+
+If the elements are sorted but in the reverse order, however, each new value will be moved through all the sorted elements. In that case, we get the quadratic running time.
+
+
+## Binary search
+
+**Exercise:** What is the best-case running time, and what would the input data look like to achieve it?
+
+**Answer:** If the very first element we see is the one we are looking for, i.e. if it at the midpoint of the range, then we finish in constant time.
+
+
+
 ## Bubble sort
 
 **Exercise:** Since O₁ and O₂ tells us that the last j elements are already the largest numbers and are already sorted, we do not need to have the inner loop iterate through these last j elements. How would you exploit this to improve the running time of bubble sort? The worst-case behaviour will not improve, but you can change the running time to about half of the one we have above. Show that this is the case.
