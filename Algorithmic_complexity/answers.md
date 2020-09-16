@@ -154,7 +154,9 @@ Functions:
 
 **Exercise:** Is there a difference between its best-case and worst-case running time?
 
-**Answer:** No, in the sense that there is not data that gives us better or worse running time. However, the running time is not quadratic as we just derived; the algorithm runs faster than that. We do not *actually* iterate through all numbers larger than i. Only those that we have not eliminated as divisible by a number smaller than i. Getting the average number of elements left in the list when we look at prime p is not so straightforward; at least not to me.
+**Answer:** No, in the sense that there is not data that gives us better or worse running time.
+
+However, the running time is not quadratic as we just derived; the algorithm runs faster than that. It *is* O(n²), because it is an upper bound; we do not compare more than quadratically many numbers, but it is not a tight upper bound. We do not *actually* iterate through all numbers larger than i. Only those that we have not eliminated as divisible by a number smaller than i. Getting the average number of elements left in the list when we look at prime p is not so straightforward; at least not to me.
 
 We can modify the algorithm slightly, to make it easier to reason about. Instead of running through all the candidates in each inner loop, we can jump through the multiples of the current prime. If we keep all candidates in the list when we "remove" them, and merely tag them as removed, we can jump in steps of p to do this.
 
