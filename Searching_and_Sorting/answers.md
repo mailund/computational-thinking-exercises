@@ -1,5 +1,13 @@
 # Searching and Sorting
 
+## Binary search
+
+We argued that the worst-case running time for the binary search is O(log n).
+
+**Exercise:** What is the best-case running time, and what would the input data look like to achieve it?
+
+The best case is obviously when the key we search for is the first we ask for, so when it is in the middle of the list. In that case the running time is O(1)
+
 ## Selection sort
 
 **Exercise:** Give an example input where selection sort is not stable.
@@ -20,7 +28,10 @@ We have now reversed the order of the twos. Whether the algorithm is stable or n
 
 ## Insertion sort
 
-**Exercise:** Describe what the input list should look like to achieve best-case and worst-case time performance, respectively.
+We argued that the worst-case running time for insertion sort was O(n²) but the best-case running time was O(n).
+
+**Exercise:** Describe what the input data, `numbers`, should look like to actually achieve the worst- and best-case running times.
+
 
 If the input is already sorted, then we never swap any items. The inner loop is always terminated at the first comparison and the body is never executed.
 
@@ -48,13 +59,6 @@ For each index `i` we move the element there down until we find its place in the
 If `x` is sorted from the start, we never move an element down—we just discover that it is already where it should be. In that case, we get the linear running time.
 
 If the elements are sorted but in the reverse order, however, each new value will be moved through all the sorted elements. In that case, we get the quadratic running time.
-
-
-## Binary search
-
-**Exercise:** What is the best-case running time, and what would the input data look like to achieve it?
-
-**Answer:** If the very first element we see is the one we are looking for, i.e. if it at the midpoint of the range, then we finish in constant time.
 
 
 
@@ -131,8 +135,6 @@ while k < len(x) - 1:
             break
     
     # reverse it
-    if l > k + 1:
-        print(k, l, x[k:l])
     i, j = k, l - 1
     while j > i:
         x[i], x[j] = x[j], x[i]
