@@ -75,7 +75,8 @@ We can then reduce the problem to the second-to-last digit by dividing i by b. I
 **Exercise:** Consider our recursive implementation of binary search:
 
 ```python
-def bsearch(x, e, low = 0, high = len(x)):
+def bsearch(x, e, low = 0, high = False):
+  high = high or len(x)
 	if low >= high:
 		return False
 	mid = (low + high) // 2

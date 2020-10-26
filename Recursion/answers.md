@@ -147,7 +147,8 @@ def min_rec(x, i = 0, acc = None):
 **Exercise:** Consider our recursive implementation of binary search:
 
 ```python
-def bsearch(x, e, low = 0, high = len(x)):
+def bsearch(x, e, low = 0, high = False):
+  high = high or len(x)
 	if low >= high:
 		return False
 	mid = (low + high) // 2
@@ -164,7 +165,8 @@ This function is tail-recursive, so use the transformation to replace it with a 
 The direct translation is this:
 
 ```python
-def bsearch(x, e, low = 0, high = len(x)):
+def bsearch(x, e, low = 0, high = False):
+    high = high or len(x)
     while True:
 	    if low >= high:
 		    return False
@@ -180,7 +182,8 @@ def bsearch(x, e, low = 0, high = len(x)):
 If we just change the loop condition we get the usual function:
 
 ```python
-def bsearch(x, e, low = 0, high = len(x)):
+def bsearch(x, e, low = 0, high = False):
+    high = high or len(x)
     while low < high:
 	    mid = (low + high) // 2
 	    if x[mid] == e:

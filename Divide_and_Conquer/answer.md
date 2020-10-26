@@ -42,13 +42,19 @@ You apply one of the two rules in each recursion, choosing the right one best on
 
 > The area for the interval i to j is h(j-q) where h is the shortest block in the histogram between i and j. You can find the largest rectangle by going through all pairs (i,j), find the shortest block, and compute the area. Then pick the pair with the largest area. A naive implementation of this would take O(n³). (Why?)
 
+Iterating through all pairs, i and j, takes O(n²). Inside that loop you use O(n) to find the smallest block.
+
 > You can construct a divide-and-conquer algorithm for solving it by observing that, the largest rectangle contained in the interval i to j (not the one that goes from i to j but the largest inside it) is found in the first half, the last half, or starting before and ending after the midpoint.
 
 > To make the algorithm efficient, you should also observe that you can compute the largest area that cuts through an index m as follows: Compute an array that, for i < m, contains the minimal height between i and m, and that for j > m, contains the minimal height between m and j.
 
 ![](area-greedy.png)
 
+You can easily compute this array in O(n) by scanning left/right and keeping track of the smallest height as you go along.
+
 > If you extend the rectangle around m by moving i from m down to zero and j from m up to n, and you always extend in the direction with the largest height, you can compute the largest area that spans over m in linear time.
+
+In each step, you get a new height from the array you pre-computed. If you accept the new height, the width of the area increases by one while the height goes to the new height value.
 
 > Construct an algorithm for solving this problem and derive its running time.
 
@@ -68,10 +74,17 @@ The time recurrence equation is `T(n) = 2T(n/2) + O(n)` which is in `O(n log n)`
 > Observe the following: 
 
 > 1. The skyline for a single house, `(i,h,j)`, is simply the list `(0,0,i); (i,h,j); (j,0,n)`. 
-2. If you have two skylines, you can merge them in linear time.
+
+> 2. If you have two skylines, you can merge them in linear time.
 
 > Prove item 2. and use it to derive an O(n log n) divide-and-conquer algorithm for computing skyline plots.
 
-The two skylines are sorted with respect to the indices. Start by setting `i` to the first index (this will be zero) and `h` to the first height. Now pick the smallest index in the two skylines to the right of `i`; call it `j`, and let `k` be the the new height at `k`. If `h` is less than or equal `h`, discard this `j` and move to the next index in the skylines. If `k > h`, add `(i,h,j)` to the new skyline, set `i = j` and `h = k` and continue the merge.
 
+Consider the two input lists, and let the first elements be `(i,n,j)` and `(i,m,k)` (they will start at the first index when the algorithm starts, and we will enforce that as an invariant). 
+
+Without loss of generality, say `n >= m` (if `m > n` you can flip the lists and do the same reasoning). Then we want to remove blocks from list two that are smaller than the block we already have from list 1, so remove blocks `(i',m',k')` as long as `m' <= n` and `k' <= j`. Then we have blocks `(i,n,j)` and `(i',m',k')` and we do a case analysis. (It is helpful to draw the situations, so I urge you to do that). If we remove all the blocks, then we must have the entire input (because `k'` apparently couldn't get larger than `j`), and we are done. Output `(i,n,j)` as the last block, and be done.
+
+Otherwise: If `m' <= n` we have removed blocks contained in `(i,n,j)` but now have a block that starts smaller but goes beyond `(i,n,j)`. Output `(i,n,j)` (after that block, the next in the first list has a different height, and so will the remaining of `(i',m',k')`. Push `(j,m',k')` back to the second list. It is the remainder of the block (or the full block if `j == i'`). We satisfy the invariant and can continue.
+
+If `m' > n`, we output `(i,n,i')` because the output has to change height there. That leaves `(i',n,j)` of the original block. It could be empty, if `i' == j`, in which case we are done with it. In that case, the next block in the first list starts at index `i'` (because it starts at index `j` and it was not the last or we would have terminated earlier). That means that we satisfy the invariant if we also put `(i',m',k')` back in the second list. Otherwise, push `(i',n,j)` back to the first list. Do that, and go back to the beginning of the loop. 
 
