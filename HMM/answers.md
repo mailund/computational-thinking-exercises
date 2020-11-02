@@ -19,7 +19,7 @@ P(Y[4]|Y[1],Y[3])
 
 ## Binomial and multinomial distributions
 
-If I flip a coin *n* times, with a parameter 𝜃 that tells me the probability of seeing heads, what is the probability that I see *k* heads? (For physical reasons it is close to impossible to create a loaded coin, so 𝜃 will be 1/2, but bear with me, there are many systems where you get a binary outcome and the probabilities are not 50-50). A sequence of *n* tosses, ~X=(X<sub>1</sub>,X<sub>2</sub>,…,X<sub>n</sub>)~ has probability ~∏<sub>i=1</sub> P(X<sub>i</sub>) = ∏<sub>i=1</sub> 𝜃^<sup>X<sub>1</sub></sup>(1-𝜃)<sup>1-X<sub>i</sub></sup>~ if we encode heads as 1 and tails as zero (we have probability 𝜃 for head and 1-𝜃 for tail; we can multiply the probabilities because the tosses are independent). We can simplify this to ~P(X)=𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>~ if there were *k* heads in the sequence. That is the probability for this specific sequence, but if we want to know what the probability is for a single toss, we don’t want the order of events to matter. We want to know what the probability of seeing *k* heads in *n* tosses is, because then we can set *n* to one and we have our probability. If we want the probability of *k* heads, we must sum together all the probabilities of sequences with *k* heads. For this model, because each sequence with *k* heads and *n-k* tails has the same probability, we can simply multiply with how many sequences will have *k* out of *n* heads, which is  binom(n,k), the binomial coefficient of *n* over *k*. So given 𝜃, the probability of seeing *k* heads out of *n* tosses is ~P(k;n,𝜃)=binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>~. The *n* goes as a parameter in the probability because we fix the number of tosses to *n* and do not consider it a random variable. To find the maximum likelihood estimate for 𝜃, you must maximise ~binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>$~ with respect to 𝜃. When we consider the probability a likelihood, we have fixed both *n* and *k*, so consider them constants, take the derivative with respect to 𝜃 and set the result to zero.
+If I flip a coin *n* times, with a parameter 𝜃 that tells me the probability of seeing heads, what is the probability that I see *k* heads? (For physical reasons it is close to impossible to create a loaded coin, so 𝜃 will be 1/2, but bear with me, there are many systems where you get a binary outcome and the probabilities are not 50-50). A sequence of *n* tosses, X=(X<sub>1</sub>,X<sub>2</sub>,…,X<sub>n</sub>) has probability ∏<sub>i=1</sub> P(X<sub>i</sub>) = ∏<sub>i=1</sub> 𝜃^<sup>X<sub>1</sub></sup>(1-𝜃)<sup>1-X<sub>i</sub></sup> if we encode heads as 1 and tails as zero (we have probability 𝜃 for head and 1-𝜃 for tail; we can multiply the probabilities because the tosses are independent). We can simplify this to P(X)=𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup> if there were *k* heads in the sequence. That is the probability for this specific sequence, but if we want to know what the probability is for a single toss, we don’t want the order of events to matter. We want to know what the probability of seeing *k* heads in *n* tosses is, because then we can set *n* to one and we have our probability. If we want the probability of *k* heads, we must sum together all the probabilities of sequences with *k* heads. For this model, because each sequence with *k* heads and *n-k* tails has the same probability, we can simply multiply with how many sequences will have *k* out of *n* heads, which is  binom(n,k), the binomial coefficient of *n* over *k*. So given 𝜃, the probability of seeing *k* heads out of *n* tosses is P(k;n,𝜃)=binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>. The *n* goes as a parameter in the probability because we fix the number of tosses to *n* and do not consider it a random variable. To find the maximum likelihood estimate for 𝜃, you must maximise binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>$ with respect to 𝜃. When we consider the probability a likelihood, we have fixed both *n* and *k*, so consider them constants, take the derivative with respect to 𝜃 and set the result to zero.
 
 **Exercise:** Show that this gives you 𝜃=*k/n* as the maximum likelihood parameter. If you see *k* heads out of *n* tails, the most likely probability for a head in a single toss is *k/n*.
 
@@ -84,9 +84,9 @@ def joint_log_prob(X):
     return result
 ```
 
-The probability distribution that tells you the probability of *k* heads out of *n* tosses, ~P(k;n,𝜃)= binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup>~ is called the *binomial distribution* (from the binomial coefficient). If you have more than a binary outcome, say you roll dice instead of toss coins, the mathematics is very similar, and the distribution is called a *multinomial distribution*. If you see ~n<sub>i</sub>~ outcomes of state *i*, in *n* experiments, then the maximum likelihood parameter for the probability of seeing result *i* in a single experiment is ~n<sub>i</sub>/n$~. For the starting probabilities in a Markov model, 𝜋, you have a multinomial distribution. If you see *n* runs of the Markov model, and ~n<sub>i</sub>~ of the start in state *i*, then the maximum likelihood parameter for 𝜋 has ~𝜋<sub>i</sub>=n<sub>i</sub>/n~.
+The probability distribution that tells you the probability of *k* heads out of *n* tosses, P(k;n,𝜃)= binom(n,k)𝜃<sup>k</sup>(1-𝜃)<sup>n-k</sup> is called the *binomial distribution* (from the binomial coefficient). If you have more than a binary outcome, say you roll dice instead of toss coins, the mathematics is very similar, and the distribution is called a *multinomial distribution*. If you see n<sub>i</sub> outcomes of state *i*, in *n* experiments, then the maximum likelihood parameter for the probability of seeing result *i* in a single experiment is n<sub>i</sub>/n. For the starting probabilities in a Markov model, 𝜋, you have a multinomial distribution. If you see *n* runs of the Markov model, and n<sub>i</sub> of the start in state *i*, then the maximum likelihood parameter for 𝜋 has 𝜋<sub>i</sub>=n<sub>i</sub>/n.
 
-At first glance, the transition probabilities look different, because we have two variables in play. The transition parameter, *T*, is not a multinomial distribution. That is because it is a set of conditional probabilities, row *k* is the conditional probability ~P(X<sub>i</sub>|X<sub>i-1</sub>=k)~. Each of the rows are multinomial distributions, and you can estimate the paramers as such. Take one row at a time, say ~T[k,-]~, then look at all the transitions out of *k*—those are the states you are conditioning on—and count how many times you move to each state. If you move from *k* to *h* ~n<sub>kh</sub>~ times, and you move out of a *k* state ~n<sub>k</sub>~ times, then ~T[k,h]=n<sub>kh</sub>/n<sub>k</sub>~.
+At first glance, the transition probabilities look different, because we have two variables in play. The transition parameter, *T*, is not a multinomial distribution. That is because it is a set of conditional probabilities, row *k* is the conditional probability P(X<sub>i</sub>|X<sub>i-1</sub>=k). Each of the rows are multinomial distributions, and you can estimate the paramers as such. Take one row at a time, say T[k,-], then look at all the transitions out of *k*—those are the states you are conditioning on—and count how many times you move to each state. If you move from *k* to *h* n<sub>kh</sub> times, and you move out of a *k* state n<sub>k</sub> times, then T[k,h]=n<sub>kh</sub>/n<sub>k</sub>.
 
 **Exercise:** Write a program that, given a set of sequences, estimates the parameters for a Markov model.
 
@@ -123,12 +123,12 @@ but this is not something I want to go further into.
 
 The dependency graph for a hidden Markov model looks like this:
 
-**Exercise:** Using the rules for extracting a joint probability from a dependency graph, write down the probability ~P(X,Z)~ from the dependency graph.
+**Exercise:** Using the rules for extracting a joint probability from a dependency graph, write down the probability P(X,Z) from the dependency graph.
 
 P(Z[1]) prod(i=2 to 5) P(Z[i]|Z[i-1]) prod(i=1 to 5) P(X[i]|Z[i])
 
 
-**Exercise:** Implement a function that takes ~X~ and ~Z~ as input and computes ~P(X,Z)~. The numbers will get too small for even relatively short sequences, so implement a function that computes ~log P(X,Z)~ as well. Obviously, you cannot just compute ~P(X,Z)~ first and then take the logarithm—you would still get a number underflow and taking the log at the end doesn’t help you. You need to take the log of each individual term and add the these log-values together.
+**Exercise:** Implement a function that takes X and Z as input and computes P(X,Z). The numbers will get too small for even relatively short sequences, so implement a function that computes log P(X,Z) as well. Obviously, you cannot just compute P(X,Z) first and then take the logarithm—you would still get a number underflow and taking the log at the end doesn’t help you. You need to take the log of each individual term and add the these log-values together.
 
 ```python
 def prob(X, Z):
@@ -146,11 +146,11 @@ def log_prob(X, Z):
 ```
 
 
-**Exercise:** Given a set of HMM runs, ~(X<sub>i</sub>,Z<sub>i</sub>)~, how do you estimate the probabilities ~E[h,k]~?
+**Exercise:** Given a set of HMM runs, (X<sub>i</sub>,Z<sub>i</sub>), how do you estimate the probabilities E[h,k]?
 
 **Answer** You do the same counting as we did for the Markov model.
 
-**Exercise:** Write a program that, given a list of ~(X,Z)~ pairs estimates the parameters for a hidden Markov model.
+**Exercise:** Write a program that, given a list of (X,Z) pairs estimates the parameters for a hidden Markov model.
 
 ```python
 import numpy as np
@@ -178,7 +178,7 @@ for r in range(K):
     E[r:] = emit_counts[r,:] / row_sum[r]
 ```
 
-**Exercise:** If you have already observed the hidden sequence, ~Z~, and you want to compute ~P(X|Z)~ (but not marginalise over it), you can also exploit the rearranged formula. Take out the part that involves observable states and multiply the probabilities there. Write down the formula for this, and write a function that computes ~P(X,Z)~ when it gets input ~X~ and ~Z~. To prevent underflow, implement the function so it gives you ~log P(X,Z)~ instead of ~P(X,Z)~.
+**Exercise:** If you have already observed the hidden sequence, Z, and you want to compute P(X|Z) (but not marginalise over it), you can also exploit the rearranged formula. Take out the part that involves observable states and multiply the probabilities there. Write down the formula for this, and write a function that computes P(X,Z) when it gets input X and Z. To prevent underflow, implement the function so it gives you log P(X,Z) instead of P(X,Z).
 
 **Answer**:
 
